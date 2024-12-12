@@ -1,5 +1,5 @@
 # gReLU-Inference-to-Predict-RNA-seq-Coverage
-This project uses the Borzoi model from gReLU to predict RNA-seq coverage tracks given a DNA genomic sequence from human hg38 chromosome 3. gReLU is a Python library to train, interpret, and apply deep learning models to DNA sequences. Borzoi is one of the pre-trained models from the model zoo that uses a convolutional neural network to predict RNA-seq coverage given 524kb input sequences. 
+This project uses the Borzoi model from gReLU to predict RNA-seq coverage tracks given a DNA genomic sequence from human genome hg38 chromosome 3. gReLU is a Python library to train, interpret, and apply deep learning models to DNA sequences. Borzoi is one of the pre-trained models from the model zoo that uses a convolutional neural network to predict RNA-seq coverage given 524kb input sequences. 
 
 ## Table of Contents
 - [Background](#background)
