@@ -1,10 +1,11 @@
 # gReLU-Inference-to-Predict-RNA-seq-Coverage
-This project uses the Borzoi model from gReLU to predict RNA-seq coverage tracks given a DNA genomic sequence. gReLU is a Python library to train, interpret, and apply deep learning models to DNA sequences. Borzoi is one of the pre-trained models from the model zoo that uses a convolutional neural network to predict RNA-seq coverage given 524kb input sequences. 
+This project uses the Borzoi model from gReLU to predict RNA-seq coverage tracks given a DNA genomic sequence from human hg38 chromosome 3. gReLU is a Python library to train, interpret, and apply deep learning models to DNA sequences. Borzoi is one of the pre-trained models from the model zoo that uses a convolutional neural network to predict RNA-seq coverage given 524kb input sequences. 
 
 ## Table of Contents
 - [Background](#background)
 - [Borzoi Architecture](#Borzoi-Architecture)
 - [Model Performance](#Model-Performance)
+- [Interpretation](#Interpretation)
 - [In-Silico Mutagenesis](#In-Silico-Mutagenesis)
    - [Heatmap](#Heatmap)
    - [Sequence Logo Map](#Sequence-Logo-Map)
@@ -14,6 +15,11 @@ This project uses the Borzoi model from gReLU to predict RNA-seq coverage tracks
 
 ## Background
 
+Deep learning is crucial in genomics because it enables researchers to analyze vast amounts of genomic data, identifying patterns and making predictions about gene function, disease associations, and other biological processes with significantly higher accuracy than traditional methods. 
+
+Deep learning models are increasingly being used to perform a variety of tasks on DNA sequences, such as predicting tissue- and cell type-specific sequence activity, deriving cis-regulatory rules, predicting non-coding variant effects, and designing synthetic regulatory sequences. The Borzoi model from gReLU's model zoo was trained on RNA-seq data to predict tissue and cell specific gene expression. From a single RNA-seq experiment, Borzoi derives the primary cell type/state-specific, transciption factor motifs and a genome-wide map of nucleotide influence on gene structure and expression. This type of information will enable researchers to 
+
+
 
 ## Borzoi Architecture 
 
@@ -21,18 +27,42 @@ The Borzoi architecture consists of a U-net with a tower of convolution- and sub
 embedding vectors in the contracting path. Self-attention is a critical feature of this model as it allows every pair of position vectors to exchange information. In the expansive path the 
 vectors are upsampled from the attention blocks and combined with the corresponding feature map of equal size produced by the initial convolution tower. 
 
-![Borzoi Architecture](Images/Borzoi-Architecture.png) 
+![Borzoi Architecture](Images/Borzoi_Architecture.png) 
+
+
 
 ## Model Performance 
 
+The Borzoi model was able to predict CAGE-seq and RNA-seq coverage from chr3:179309162-179505770 in specific tissues, lung tissue shown below. 
+![Model Performance](Outputs/Grelu_Predictions.png)
+
+Annotations were added to the coverage tracks using UCSC annotations tools. 
+![Model Performance](Outputs/Grelu_Predictions_with_Annotations.png)
+
+
+## Interpretation
+
+An attention weight matrix of the Borzoi Transformer model visually represents how much "attention" a model is paying to each element within a sequence of data, essentially highlighting which parts are most relevant to the current prediction, with higher values indicating greater importance and focus on that specific element compared to others in the genomic sequence.
+
+![Model Performance](Outputs/Grelu_Attention_Matrix.png)
+
 
 ## In-Silico Mutagenesis 
-
+In Silico Mutagenesis (ISM) was performed to identify which bases in the input sequence are contributing to the tissue-specific expression.
+The `ISM_predict` function in `grelu.interpret.score` performs every possible single-base substitution on the given sequence, predicts the effect of each substitution, and optionally compares these predictions to the reference sequence to return an effect size for each substitution. We are interested in performing ISM on the PIK3CA gene, we will use PIK3CA's first exon.
 
 ### Heatmap 
 
+The colors represent the change in the model's prediction for RNA-seq output when a mutation is introduced. Positions with strong red/blue nucleotides are critical for models' prediction and affect the transcription of PIK3CA. 
+![Heatmap](Outputs/Grelu_Heatmap.png)
 
 ### Sequence Logo Map 
+
+Nucleotide letters shows the direction and magnitude of the effect a mutation has on Borzoi's predicted expression 
+Tall, positive signals identify bases critical for maintaining transcriptional activity at these positions.
+Negative signals suggest bases that, when mutated to certain nucleotides, disrupt transcription. 
+
+![Sequence Logo Map](Outputs/Grelu_SequenceLogo_Map.png)
 
 ---
 ## Citations 
