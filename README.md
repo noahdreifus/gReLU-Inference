@@ -17,7 +17,9 @@ This project uses the Borzoi model from gReLU to predict RNA-seq coverage tracks
 
 Deep learning is crucial in genomics because it enables researchers to analyze vast amounts of genomic data, identifying patterns and making predictions about gene function, disease associations, and other biological processes with significantly higher accuracy than traditional methods. 
 
-Deep learning models are increasingly being used to perform a variety of tasks on DNA sequences, such as predicting tissue- and cell type-specific sequence activity, deriving cis-regulatory rules, predicting non-coding variant effects, and designing synthetic regulatory sequences. The Borzoi model from gReLU's model zoo was trained on RNA-seq data to predict tissue and cell specific gene expression. From a single RNA-seq experiment, Borzoi derives the primary cell type/state-specific, transciption factor motifs and a genome-wide map of nucleotide influence on gene structure and expression. This type of information will enable researchers to 
+Deep learning models are increasingly being used to perform a variety of tasks on DNA sequences, such as predicting tissue- and cell type-specific sequence activity, deriving cis-regulatory rules, predicting non-coding variant effects, and designing synthetic regulatory sequences. The Borzoi model from gReLU's model zoo was trained on RNA-seq data to predict tissue and cell specific gene expression. From a single RNA-seq experiment, Borzoi derives the primary cell type/state-specific, transciption factor motifs and a genome-wide map of nucleotide influence on gene structure and expression. 
+
+This project aims to discover the tissue specificity and associated cis-regulatory elements of the PIK3CA gene associated with multiple types of cancer (breast, lung, ovarian, brain, liver). 
 
 
 
@@ -49,7 +51,7 @@ An attention weight matrix of the Borzoi Transformer model visually represents h
 
 ## In-Silico Mutagenesis 
 In Silico Mutagenesis (ISM) was performed to identify which bases in the input sequence are contributing to the tissue-specific expression.
-The `ISM_predict` function in `grelu.interpret.score` performs every possible single-base substitution on the given sequence, predicts the effect of each substitution, and optionally compares these predictions to the reference sequence to return an effect size for each substitution. We are interested in performing ISM on the PIK3CA gene, we will use PIK3CA's first exon.
+The `ISM_predict` function in `grelu.interpret.score` performs every possible single-base substitution on the given sequence, predicts the effect of each substitution, and optionally compares these predictions to the reference sequence to return an effect size for each substitution. Since we are interested in performing ISM on the PIK3CA gene, PIK3CA gene's first exon 100 bp upstream and downstream from the start position of the first exon were used an input sequences.
 
 ### Heatmap 
 
@@ -68,6 +70,10 @@ Negative signals suggest bases that, when mutated to certain nucleotides, disrup
 ## Citations 
 **Paper Citation**: Linder, J., Srivastava, D., Yuan, H., Agarwal, V., & Kelley, D. R. (2023). Predicting RNA-seq coverage from DNA sequence as a unifying model of gene regulation. bioRxiv. https://doi.org/10.1101/2023.08.30.555582
 
-**Code adopted from**: https://github.com/Genentech/gReLU/tree/main
+**Code adopted from**: https://github.com/Genentech/gReLU/tree/main and https://github.com/calico/borzoi/tree/main 
 
-Any comments, questions, or suggestions are greatly appreciated! Thank you. 
+--- 
+Moving forward I would be interested to investigate the variants of unknown signficance in the intron regions spanning thousands of base pairs away from the PIK3CA gene. As of now, many pathogenic mutations in the coding
+regions of the gene have already been identified, but there are still many cis-regulatory elements that are unknown. It would be interesting to perform ISM on these regions to understand how mutations in the regulatory regions of the genome impact expression of genes involved in cancer. 
+
+Any comments, questions, or suggestions are would be greatly appreciated, thank you! 
