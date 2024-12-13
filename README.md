@@ -3,6 +3,7 @@ This project uses the Borzoi model from gReLU to predict RNA-seq coverage tracks
 
 ## Table of Contents
 - [Background](#background)
+- [Previous Work](#Previous-Work)
 - [Borzoi Architecture](#Borzoi-Architecture)
 - [Model Performance](#Model-Performance)
 - [Interpretation](#Interpretation)
@@ -22,7 +23,9 @@ Deep learning models are increasingly being used to perform a variety of tasks o
 
 This project aims to discover the tissue specificity and associated cis-regulatory elements of the PIK3CA gene associated with multiple types of cancer (breast, lung, ovarian, brain, liver). 
 
+## Previous Work 
 
+In the paper by Linder et al. (2023), they showed that Borzoi can predict exon-intron coverage patterns with striking concordance for even long genes with many exons. Borzoi's predictions match RNA-seq coverage with a mean 0.83 Pearson R across human samples and can explains a significant amount of the variation observed between tracks (such as tissue- and cell type-specific differences).
 
 ## Borzoi Architecture 
 
